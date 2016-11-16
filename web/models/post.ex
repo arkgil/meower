@@ -5,7 +5,8 @@ defmodule Meower.Post do
 
   use Meower.Web, :model
 
-  @type t :: %__MODULE__{author: String.t,
+  @type t :: %__MODULE__{id: pos_integer,
+                         author: String.t,
                          content: String.t}
 
   schema "posts" do
