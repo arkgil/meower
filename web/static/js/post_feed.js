@@ -1,4 +1,5 @@
 import PostAPI from './post_api'
+import socket from './socket'
 
 let PostFeed = {
 
@@ -10,6 +11,15 @@ let PostFeed = {
         this.postContentInput =  document.getElementById('post-content-input'),
 
         this.postForm.onsubmit = this.handlePostSubmit.bind(this)
+
+        this.channel = socket.channel("post_feed", {})
+        this.channel.join()
+            .receive("ok", () => {
+                this.channel.on("new_post", ({post}) => {
+                    this.renderOne(post)
+                })
+            })
+            .receive("error", () => {})
 
         PostAPI.indexReq(this.initialRender.bind(this))
     },
@@ -67,7 +77,6 @@ let PostFeed = {
 
     createPost(resp) {
         if(resp.status == 201) {
-            resp.json().then(this.renderOne.bind(this))
             this.postContentInput.value = ""
         }
     }

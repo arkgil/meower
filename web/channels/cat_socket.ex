@@ -3,6 +3,8 @@ defmodule Meower.CatSocket do
 
   transport :websocket, Phoenix.Transports.WebSocket
 
+  channel "post_feed", Meower.PostFeedChannel
+
   def connect(_params, socket) do
     {:ok, socket}
   end

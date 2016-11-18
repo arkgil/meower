@@ -3,7 +3,7 @@ defmodule Meower.PostService do
   Functons for managing `Meower.Post` persistence
   """
 
-  alias Meower.{Repo, Post}
+  alias Meower.{Repo, Post, PostFeedChannel}
   alias Ecto.Changeset
   import Ecto.Query
 
@@ -28,9 +28,18 @@ defmodule Meower.PostService do
 
   @spec insert(map) :: {:ok, Post.t} | {:error, Changeset.t}
   def insert(params) do
-    %Post{}
+    res = %Post{}
     |> Post.changeset(params)
     |> Repo.insert()
+
+    case res do
+      {:ok, post} ->
+        PostFeedChannel.broadcast_new_post(post)
+      {:error, _} ->
+        :ok
+    end
+
+    res
   end
 
   defp parse_id(id) when is_binary(id) do
