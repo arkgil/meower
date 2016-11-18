@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div id ="post-feed" class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header text-muted">
+          <b>Kitty</b>
+        </div>
+        <div class="card-block">
+          <p class="card-text">
+            Hello darkness, my old friend..
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

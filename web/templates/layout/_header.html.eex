@@ -1,0 +1,5 @@
+<div class="container">
+  <nav class="navbar navbar-dark navbar-fixed-top" style="background-color: #1da1f2">
+  <a href="/" class="navbar-brand">Meower</a>
+  </nav>
+</div>

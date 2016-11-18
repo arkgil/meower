@@ -20,4 +20,7 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
-import PostAPI from "./post_api"
+import PostAPI from './post_api'
+import PostFeed from './post_feed'
+
+PostFeed.init()
