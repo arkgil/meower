@@ -31,7 +31,7 @@ defmodule Meower.PostController do
         |> render("show.json", post: post)
       {:error, _changeset} ->
         conn
-        |> put_status(:unproccessable_entity)
+        |> put_status(:unprocessable_entity)
         |> text("")
     end
   end

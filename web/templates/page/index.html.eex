@@ -1,16 +1,29 @@
 <div class="container">
   <div class="row">
-    <div id ="post-feed" class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header text-muted">
-          <b>Kitty</b>
-        </div>
-        <div class="card-block">
-          <p class="card-text">
-            Hello darkness, my old friend..
-          </p>
-        </div>
+    <div col-md-8 offset-md-2">
+      <div class="container">
+        <form id="post-form">
+          <div class="form-group row">
+            <div class="col-md-3 offset-md-2">
+              <input type="text" id="post-author-input" class="form-control" placeholder="Author"></input>
+            </div>
+            <div class="col-md-5">
+              <textarea id="post-content-input" class="form-control" placeholder="Content"></textarea>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-8 offset-md-2">
+              <button id="post-submit-button" type="submit" class="btn btn-block btn-success">
+                <i class="fa fa-paw"></i>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div id ="post-feed" class="col-md-8 offset-md-2">
     </div>
   </div>
 </div>

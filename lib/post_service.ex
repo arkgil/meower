@@ -5,6 +5,7 @@ defmodule Meower.PostService do
 
   alias Meower.{Repo, Post}
   alias Ecto.Changeset
+  import Ecto.Query
 
   @spec get(id :: pos_integer | String.t) :: {:ok, Post.t} | {:error, :not_found}
   def get(id) when is_integer(id) do
@@ -22,7 +23,7 @@ defmodule Meower.PostService do
 
   @spec all :: [Post.t]
   def all do
-    Repo.all Post
+    Repo.all from p in Post, order_by: p.inserted_at
   end
 
   @spec insert(map) :: {:ok, Post.t} | {:error, Changeset.t}

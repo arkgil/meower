@@ -1,21 +1,28 @@
 import PostAPI from './post_api'
 
 let PostFeed = {
-    postFeed: document.getElementById('post-feed'),
 
     init() {
-        PostAPI.indexReq(this.initialRender)
+        this.postFeed =  document.getElementById('post-feed'),
+        this.postForm = document.getElementById('post-form')
+        this.postSubmitButton =  document.getElementById('post-submit-button'),
+        this.postAuthorInput = document.getElementById('post-author-input'),
+        this.postContentInput =  document.getElementById('post-content-input'),
+
+        this.postForm.onsubmit = this.handlePostSubmit.bind(this)
+
+        PostAPI.indexReq(this.initialRender.bind(this))
     },
 
     initialRender(resp) {
         if (resp.status == 200) {
-            resp.json().then(PostFeed.renderAll)
+            resp.json().then(this.renderAll.bind(this))
         }
     },
 
     renderAll(posts) {
         for(let i = 0; i < posts.length; i++) {
-            PostFeed.renderOne(posts[i])
+            this.renderOne(posts[i])
         }
     },
 
@@ -30,6 +37,10 @@ let PostFeed = {
         let postAuthor = document.createElement('b')
         postAuthor.innerHTML = '@' + postObj.author
 
+        let postCreatedAt = document.createElement('small')
+        postCreatedAt.classList.add('pull-right')
+        postCreatedAt.innerHTML = postObj.created_at
+
         let postBlock = document.createElement('div')
         postBlock.classList.add('card-block')
 
@@ -38,11 +49,27 @@ let PostFeed = {
         postContent.innerHTML = postObj.content
 
         postHeader.appendChild(postAuthor)
+        postHeader.appendChild(postCreatedAt)
         postBlock.appendChild(postContent)
         post.appendChild(postHeader)
         post.appendChild(postBlock)
 
-        this.postFeed.appendChild(post)
+        this.postFeed.insertBefore(post, this.postFeed.firstChild)
+    },
+
+    handlePostSubmit(e) {
+        e.preventDefault()
+
+        let author = this.postAuthorInput.value
+        let content = this.postContentInput.value
+        PostAPI.createReq({author: author, content: content}, this.createPost.bind(this))
+    },
+
+    createPost(resp) {
+        if(resp.status == 201) {
+            resp.json().then(this.renderOne.bind(this))
+            this.postContentInput.value = ""
+        }
     }
 }
 
