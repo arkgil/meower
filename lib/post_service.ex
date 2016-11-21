@@ -5,6 +5,8 @@ defmodule Meower.PostService do
 
   alias Meower.{Repo, Post, PostFeedChannel}
   alias Ecto.Changeset
+  alias Meower.CatBot
+
   import Ecto.Query
 
   @spec get(id :: pos_integer | String.t) :: {:ok, Post.t} | {:error, :not_found}
@@ -34,6 +36,7 @@ defmodule Meower.PostService do
 
     case res do
       {:ok, post} ->
+        CatBot.notify(post)
         PostFeedChannel.broadcast_new_post(post)
       {:error, _} ->
         :ok

@@ -7,6 +7,7 @@ defmodule Meower do
     children = [
       supervisor(Meower.Repo, []),
       supervisor(Meower.Endpoint, []),
+      worker(Meower.CatBot, [])
     ]
 
     opts = [strategy: :one_for_one, name: Meower.Supervisor]
